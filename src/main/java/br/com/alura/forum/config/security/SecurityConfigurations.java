@@ -15,14 +15,16 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     //Configuracao de autorização(controle login)
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/topicos").permitAll()
+                .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin();
     }
 
     //config de autenticação(controle de url e permissoes)
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/topicos").permitAll()
-                .antMatchers(HttpMethod.GET, "/topicos/*").permitAll();
     }
 
     //Config de recursos estaticos(js, css, imagens)
